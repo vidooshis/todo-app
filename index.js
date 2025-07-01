@@ -4,7 +4,6 @@ const express= require("express")
 const {usermodel, todomodel}= require("./db");
 const jwt = require("jsonwebtoken");
 const mongoose= require("mongoose");
-const JWT_SECRET="nfgvfi23he$23n"
 const { z } = require("zod")
 const app=express()
 
@@ -12,8 +11,9 @@ const path = require('path');
 // serve all files in ./public
 app.use(express.static(path.join(__dirname, 'public')));
 
-mongoose.connect("mongodb+srv://vidooshis:cKIJ483b90IId58Y@cluster0.ok0xijv.mongodb.net/todo-app");
-
+require("dotenv").config();          // << add this at the very top
+const JWT_SECRET = process.env.JWT_SECRET;
+mongoose.connect(process.env.MONGO_URI);
 app.use(express.json());
 app.get("/", function(req,res){
     res.sendFile(__dirname, '/public/index.html')
