@@ -8,10 +8,10 @@ const { z } = require("zod")
 const app=express()
 
 const path = require('path');
-// serve all files in ./public
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-require("dotenv").config();          // << add this at the very top
+require("dotenv").config();         
 const JWT_SECRET = process.env.JWT_SECRET;
 mongoose.connect(process.env.MONGO_URI);
 app.use(express.json());
