@@ -140,8 +140,5 @@ app.delete("/todo/:id", auth, async function(req, res){
     }
 })
 
-
-
-
-
-
+const serverless = require("serverless-http");
+module.exports = serverless(app);

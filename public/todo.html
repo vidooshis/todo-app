@@ -48,7 +48,7 @@
             msgDiv.innerHTML= "<p>creating todo</p>"
             await wait(500);
             try{
-                const response = await axios.post("/todo",{
+                const response = await axios.post("/api/todo",{
                     title:title},{
                     headers:{
                         token:localStorage.getItem("token")
@@ -67,7 +67,7 @@
 
         async function Done(id){
             try{
-                const response= await axios.delete(`/todo/${id}`,{
+                const response= await axios.delete(`/api/todo/${id}`,{
                     headers:{
                         token:localStorage.getItem("token")
                     }
@@ -84,7 +84,7 @@
 
         async function gettodos(){
             try{
-                const response=await axios.get("/todos",{
+                const response=await axios.get("/api/todos",{
                     headers:{
                         token:localStorage.getItem("token")
                     }

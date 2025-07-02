@@ -1,13 +1,10 @@
 {
   "version": 2,
   "builds": [
-    { "src": "index.js",   "use": "@vercel/node" },
-    { "src": "public/**/*", "use": "@vercel/static" }
+    { "src": "api/index.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/signup",     "dest": "/index.js" },
-    { "src": "/signin",     "dest": "/index.js" },
-    { "src": "/todo(?:/.*)?", "dest": "/index.js" },
-    { "src": "/(.*)",       "dest": "/public/$1" }
+    { "src": "/api/(.*)", "dest": "api/index.js" },
+    { "src": "/(.*)", "dest": "/public/$1" }
   ]
 }
