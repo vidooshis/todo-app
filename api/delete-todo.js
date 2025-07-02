@@ -6,7 +6,7 @@ module.exports = authMiddleware(async (req, res) => {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const id = req.query.id;
+  const { id } = req.query;
 
   try {
     await todomodel.findByIdAndDelete(id);
