@@ -66,44 +66,43 @@
         }
 
         async function Done(id){
-            try{
-                const response= await axios.delete(`/api/todo/${id}`,{
-                    headers:{
-                        token:localStorage.getItem("token")
-                    }
-                })
-                document.getElementById("todos").innerHTML="";
-                gettodos();
+            try {
+                await axios.delete(`/api/todo/${id}`, {
+                    headers: { token: localStorage.getItem("token") }
+                });
+
                 document.getElementById("msg").innerHTML = "<p>Todo deleted successfully</p>";
+                await gettodos();
+
                 setTimeout(() => document.getElementById("msg").innerHTML = "", 1000);
-            }catch(e){
-                document.getElementById("msg").innerHTML= e.response.data.msg;
+            } catch (e) {
+                document.getElementById("msg").innerHTML = e.response?.data?.msg || "Delete failed";
                 setTimeout(() => document.getElementById("msg").innerHTML = "", 1000);
             }
         }
 
-        async function gettodos(){
-            try{
-                const response=await axios.get("/api/todos",{
-                    headers:{
-                        token:localStorage.getItem("token")
-                    }
-                })
-                
+        async function gettodos() {
+            try {
+                const response = await axios.get("/api/todos", {
+                    headers: { token: localStorage.getItem("token") }
+                });
+
                 const todos = response.data.todos;
                 const container = document.getElementById("todos");
+
+                container.innerHTML = ""; // Clear before rendering
 
                 todos.forEach(todo => {
                     const todoDiv = document.createElement("div");
                     todoDiv.classList.add("box2");
-                    todoDiv.innerHTML= `<p>${todo.title}</p><button onclick="Done('${todo._id}')">Done</button>`
-
+                    todoDiv.innerHTML = `<p>${todo.title}</p><button onclick="Done('${todo._id}')">Done</button>`;
                     container.appendChild(todoDiv);
                 });
-            }catch(e){
-                document.getElementById("msg").innerHTML="<p>Failed to get todos</p>"
+            } catch (e) {
+                document.getElementById("msg").innerHTML = "<p>Failed to get todos</p>";
             }
         }
+
         gettodos();
     </script>
 </body>
