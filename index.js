@@ -11,7 +11,10 @@ const path = require('path');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 require("dotenv").config();         
+
+
 const JWT_SECRET = process.env.JWT_SECRET;
 mongoose.connect(process.env.MONGO_URI);
 app.use(express.json());
@@ -137,4 +140,8 @@ app.delete("/todo/:id", auth, async function(req, res){
     }
 })
 
-// app.listen(3000);
+
+
+
+
+
