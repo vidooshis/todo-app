@@ -23,7 +23,7 @@ body {
 .top-bar {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 1rem 2rem;
   box-sizing: border-box;
   color: var(--white);
