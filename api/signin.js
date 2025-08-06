@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const { usermodel } = require("./db");
 
 module.exports = async (req, res) => {
+  console.log("HIT signin.js API route");
   if (req.method !== "POST") return res.status(405).json({ msg: "Only POST allowed" });
 
   const { email, password } = req.body;
@@ -13,5 +14,5 @@ module.exports = async (req, res) => {
   if (!match) return res.status(403).json({ msg: "Incorrect credentials" });
 
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-  res.json({ token });
+  res.json({ token, name: user.name });
 };

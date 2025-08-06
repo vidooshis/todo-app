@@ -1,109 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo Application</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <title>Todo Application</title>
 </head>
 <body>
-    <div class="todo-app">
-        <header class="app-header">
-            <h1 class="app-title">My Todo List</h1>
-            <button class="logout-button" onclick="logout()">Logout</button>
-        </header>
-        
-        <div class="todo-input-container">
-            <input type="text" placeholder="Enter a new task" id="title">
-            <button class="add-button" onclick="addtodo()">+ Add</button>
-        </div>
-        
-        <div id="msg" class="message"></div>
-        
-        <div class="todo-grid" id="todos">
-            <!-- Todos will be inserted here by JavaScript -->
-        </div>
+  <div class="top-bar">
+    <span></span>
+    <button class="logout-button" onclick="logout()">Logout</button>
+  </div>
+
+  <section class="todo">
+    <h2 class="main-heading">MY TODO LIST</h2>
+
+    <div class="input">
+      <input type="text" class="input-field" id="title" placeholder="Add a new task" />
+      <button class="btn" onclick="addtodo()">Add</button>
     </div>
 
-    <script>
-        async function wait(ms){
-            return new Promise(resolve => setInterval(resolve,ms));
-        }
+    <ul class="scroll" id="todos"></ul>
 
-        function logout() {
-            localStorage.removeItem("token");
-            window.location.href = "index.html";
-        }
-        async function addtodo(){
-            const title = document.getElementById("title").value;
-            const msgDiv = document.getElementById("msg");
+    <div>
+      <hr class="counter" />
+      <div class="counter-container">
+        <p><span id="todoCount">0</span> items total</p>
+      </div>
+    </div>
+  </section>
 
-            if(!title){
-                msgDiv.innerHTML="<p>Enter a task</p>"
-                await wait(1000);
-                msgDiv.innerHTML="";
-                return;
-            }
-            msgDiv.innerHTML= "<p>creating todo</p>"
-            await wait(500);
-            try{
-                const response = await axios.post("/api/todo",{
-                    title:title},{
-                    headers:{
-                        token:localStorage.getItem("token")
-                    }
-                })
-                msgDiv.innerHTML= "<p>Todo Created</p>"
-            }catch(e){
-                console.log("not done")
-                msgDiv.innerHTML = e.response.data.msg
-            }
-            await wait(500);
-            document.getElementById("todos").innerHTML="";
-            gettodos();
-            msgDiv.innerHTML="";
-        }
+  <script>
+    async function logout() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("name");
+      window.location.href = "index.html";
+    }
 
-        async function Done(id){
-            try {
-                await axios.delete(`/api/todo/${id}`, {
-                    headers: { token: localStorage.getItem("token") }
-                });
+    async function addtodo() {
+      const title = document.getElementById("title").value;
+      if (!title) return;
 
-                document.getElementById("msg").innerHTML = "<p>Todo deleted successfully</p>";
-                await gettodos();
-
-                setTimeout(() => document.getElementById("msg").innerHTML = "", 1000);
-            } catch (e) {
-                document.getElementById("msg").innerHTML = e.response?.data?.msg || "Delete failed";
-                setTimeout(() => document.getElementById("msg").innerHTML = "", 1000);
-            }
-        }
-
-        async function gettodos() {
-            try {
-                const response = await axios.get("/api/todos", {
-                    headers: { token: localStorage.getItem("token") }
-                });
-
-                const todos = response.data.todos;
-                const container = document.getElementById("todos");
-
-                container.innerHTML = ""; // Clear before rendering
-
-                todos.forEach(todo => {
-                    const todoDiv = document.createElement("div");
-                    todoDiv.classList.add("box2");
-                    todoDiv.innerHTML = `<p>${todo.title}</p><button onclick="Done('${todo._id}')">Done</button>`;
-                    container.appendChild(todoDiv);
-                });
-            } catch (e) {
-                document.getElementById("msg").innerHTML = "<p>Failed to get todos</p>";
-            }
-        }
-
+      try {
+        await axios.post("/api/todo", { title }, {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        });
+        document.getElementById("title").value = "";
         gettodos();
-    </script>
+      } catch (e) {
+        alert(e.response?.data?.msg || "Failed to add");
+      }
+    }
+
+    async function Done(id) {
+      try {
+        await axios.delete(`/api/todo/${id}`, {
+          headers: { token: localStorage.getItem("token") },
+        });
+        gettodos();
+      } catch (e) {
+        alert(e.response?.data?.msg || "Delete failed");
+      }
+    }
+
+    async function gettodos() {
+      try {
+        const response = await axios.get("/api/todos", {
+          headers: { token: localStorage.getItem("token") },
+        });
+
+        const todos = response.data.todos;
+        const container = document.getElementById("todos");
+
+        container.innerHTML = "";
+
+        if (todos.length === 0) {
+          document.getElementById("todoCount").textContent = 0;
+          return;
+        }
+
+        todos.forEach((todo) => {
+          const item = document.createElement("li");
+          item.className = "todo-item";
+          item.innerHTML = `
+            <label class="todo-checkbox-container">
+              <input type="checkbox" onchange="Done('${todo._id}')">
+              <span class="checkmark"></span>
+              <span class="todo-title">${todo.title}</span>
+            </label>`;
+          container.appendChild(item);
+        });
+
+        document.getElementById("todoCount").textContent = todos.length;
+      } catch (e) {
+        alert("Error fetching todos");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const name = localStorage.getItem("name");
+      document.getElementById("name").innerText = name || "User";
+      gettodos();
+    });
+  </script>
 </body>
 </html>

@@ -9,7 +9,7 @@ const app=express()
 
 const path = require('path');
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname,'..', 'public')));
 
 
 require("dotenv").config();         
@@ -19,7 +19,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 mongoose.connect(process.env.MONGO_URI);
 app.use(express.json());
 app.get("/", function(req,res){
-    res.sendFile(__dirname, '/public/index.html')
+    res.sendFile(path.join(__dirname,'..', 'public','index.html'))
 })
 app.post("/signup", async function(req, res){
     const requiredBody = z.object({
@@ -59,6 +59,7 @@ app.post("/signup", async function(req, res){
     })
 })
 app.post("/signin", async function(req, res){
+    console.log("HIT index.js /signin");
     const email= req.body.email;
     const password= req.body.password;
 
@@ -79,7 +80,8 @@ app.post("/signin", async function(req, res){
             id: user.id
         }, JWT_SECRET);
         res.json({
-            token: token
+            token: token,
+            name: user.name
         });
     }else{
         res.status(403).json({
@@ -140,5 +142,11 @@ app.delete("/todo/:id", auth, async function(req, res){
     }
 })
 
-const serverless = require("serverless-http");
-module.exports = serverless(app);
+if (process.env.LOCAL_DEV === "true") {
+  app.listen(3000, () => {
+    console.log("Server running locally at http://localhost:3000");
+  });
+} else {
+  const serverless = require("serverless-http");
+  module.exports = serverless(app);
+}

@@ -88,9 +88,9 @@
             document.getElementById("signuppassword").value="";
         }
 
-        async function signin(){
-            const email = document.getElementById("signinemail").value
-            const password= document.getElementById("signinpassword").value
+        async function signin() {
+            const email = document.getElementById("signinemail").value;
+            const password = document.getElementById("signinpassword").value;
             const msgDiv = document.getElementById("signinmsg");
 
             msgDiv.innerHTML = "";
@@ -98,24 +98,33 @@
                 msgDiv.innerHTML = "<p>Please fill in all fields</p>";
                 return;
             }
-            try{
-                const response = await axios.post("/api/signin",{
+
+            try {
+                const response = await axios.post("/api/signin", {
                     email,
                     password
-                })
-                msgDiv.innerHTML = "<p>Signing in</p>"
+                });
+
+                console.log("Server response:", response.data); 
+
+                msgDiv.innerHTML = "<p>Signing in</p>";
+
                 localStorage.setItem("token", response.data.token);
+                localStorage.setItem("name", response.data.name);
+
                 setTimeout(() => {
-                        window.location.href = "todo.html";
-                    }, 1000);
-            }catch(e){
-                msgDiv.innerHTML = "<p>"+e.response.data.msg+"</p>"
+                    window.location.href = "todo.html";
+                }, 1000);
+            } catch (e) {
+                msgDiv.innerHTML = "<p>" + (e.response?.data?.msg || "Login failed") + "</p>";
             }
-            await wait(1000)
-            msgDiv.innerHTML="";
-            document.getElementById("signupemail").value="";
-            document.getElementById("signuppassword").value="";
+
+            await wait(1000);
+            msgDiv.innerHTML = "";
+            document.getElementById("signinemail").value = "";
+            document.getElementById("signinpassword").value = "";
         }
+
     </script>
 </body>
 </html>

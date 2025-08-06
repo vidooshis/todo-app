@@ -1,222 +1,284 @@
+:root {
+  --gradient: linear-gradient(180deg, rgba(45, 112, 253, 0.73) 0%, #163e92 100%);
+  --dark: #001747;
+  --grey: #b1bacb;
+  --grey-border: rgba(210, 210, 210, 0.75);
+  --grey-light: #eeeeee;
+  --blue: #2d70fd;
+  --green: #00d8a7;
+  --white: #ffffff;
+  --red: #e53e3e;
+}
+
 body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f9fa;
-    color: #333;
+  background: var(--gradient);
+  margin: 0;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Auth Page Styles */
-.auth-container {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    padding: 40px 20px;
-    flex-wrap: wrap;
+.top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+  color: var(--white);
+  font-size: 1rem;
 }
 
-.auth-card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    padding: 30px;
-    width: 380px;
-}
-
-.auth-title {
-    color: #2d3748;
-    margin-bottom: 25px;
-    font-size: 28px;
-    text-align: center;
-}
-
-.auth-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.form-group label {
-    font-weight: 500;
-    color: #4a5568;
-}
-
-.form-group input {
-    padding: 12px 16px;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: all 0.2s;
-}
-
-.form-group input:focus {
-    border-color: #4299e1;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
-}
-
-.auth-button {
-    background-color: #4299e1;
-    color: white;
-    border: none;
-    padding: 14px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-top: 10px;
-}
-
-.auth-button:hover {
-    background-color: #3182ce;
-}
-
-/* Todo App Styles */
-.app-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
+.name-label {
+  font-weight: bold;
+  background-color: var(--dark);
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
 }
 
 .logout-button {
-    background-color: #e53e3e;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
+  background-color: var(--red);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
 .logout-button:hover {
-    background-color: #c53030;
-    transform: translateY(-1px);
+  background-color: #c53030;
 }
 
-.todo-app {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 0 20px;
+/* Todo Container */
+.todo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border-radius: 2rem;
+  background: var(--white);
+  padding: 3rem;
+  height: 70%;
+  width: 60%;
+  box-shadow: 0 1rem 3rem 1rem rgba(0, 23, 71, 0.15);
+  max-width: 30rem;
 }
 
-.app-title {
-    color: #2d3748;
-    text-align: center;
-    margin-bottom: 30px;
+.main-heading {
+  text-transform: uppercase;
+  font-size: 3rem;
+  font-family: "Times New Roman";
+  font-weight: bolder;
+  color: var(--dark);
+  text-align: center;
+  margin-left: 8px;
 }
 
-.todo-input-container {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+.input {
+  position: relative;
+  display: flex;
+  margin-bottom: 1.5rem;
 }
 
-.todo-input-container input {
-    flex: 1;
-    padding: 12px 16px;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 16px;
+.input-field {
+  width: 100%;
+  border: 1px solid #d2d2d2bf;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  font-size: 1rem;
 }
 
-.add-button {
-    background-color: #48bb78;
-    color: white;
-    border: none;
-    padding: 0 24px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
+.input-field::placeholder {
+  color: var(--grey);
 }
 
-.add-button:hover {
-    background-color: #38a169;
+.btn {
+  color: var(--white);
+  font-size: 1rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--blue);
+  border: none;
+  margin-left: 0.5rem;
+  cursor: pointer;
 }
 
-/* Todo Grid */
-.todo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+/* List Container */
+.scroll {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  height: 200px;
+  scrollbar-width: thin;
 }
 
-.todo-card {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    transition: all 0.2s;
-    border-left: 4px solid #4299e1;
+.scroll::-webkit-scrollbar {
+  width: 0.6rem;
 }
 
-.todo-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+.scroll::-webkit-scrollbar-thumb {
+  background-color: var(--blue);
+  border-radius: 0.5rem;
 }
 
-.todo-content {
-    font-size: 16px;
-    margin-bottom: 15px;
-    color: #2d3748;
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--grey-light);
+  padding: 0.1rem;
+  margin-bottom: 0.2rem;
+  border-radius: 0.5rem;
 }
 
-.todo-actions {
-    display: flex;
-    justify-content: flex-end;
+.todo-checkbox-container {
+  display: flex;
+  align-items: center;
+  background-color: #f1f1f1;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
 }
 
-.complete-button {
-    background-color: #48bb78;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
+.todo-checkbox-container input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  cursor: pointer;
 }
 
-.complete-button:hover {
-    background-color: #38a169;
+.checkmark {
+  position: relative;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border-radius: 4px;
+  margin-right: 12px;
+  border: 2px solid #ccc;
 }
 
-/* Message Styles */
+.todo-checkbox-container input:checked ~ .checkmark {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+}
+
+.checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.todo-checkbox-container input:checked ~ .checkmark::after {
+  display: block;
+}
+
+.checkmark::after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.todo-title {
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  color: var(--dark);
+  margin-left: 5px;
+}
+
+.counter {
+  border: 0.06rem solid var(--grey-light);
+}
+
+.counter-container {
+  display: flex;
+  justify-content: flex-start;
+  color: var(--grey);
+  margin-top: 0.5rem;
+}
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.auth-card {
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+  width: 500px; 
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; 
+  box-sizing: border-box;
+}
+
+.auth-title {
+  font-size: 1.5rem;
+  color: var(--dark);
+  margin-bottom: 1rem;
+}
+
+.auth-form {
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input {
+  padding: 0.75rem;
+  border: 1px solid var(--grey-border);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.auth-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--blue);
+  color: var(--white);
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.auth-button:hover {
+  background-color: #1a57d9;
+}
+
 .message {
-    padding: 12px;
-    border-radius: 6px;
-    margin: 10px 0;
-    text-align: center;
-}
-
-.message p {
-    margin: 0;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .auth-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .auth-card {
-        width: 100%;
-        max-width: 400px;
-    }
-    
-    .todo-grid {
-        grid-template-columns: 1fr;
-    }
+  margin-top: 0.5rem;
+  color: var(--red);
+  font-size: 0.9rem;
 }
